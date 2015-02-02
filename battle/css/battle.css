@@ -5,7 +5,7 @@ body {
 div#board {
     position: relative;
     width: 1024px;
-    height: 600px;
+    height: 700px;
     margin: auto;
     background: url("../images/board.jpg") no-repeat;
 }
