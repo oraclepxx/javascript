@@ -55,7 +55,7 @@ while (hits < 3 && guesses > 0) {
 }
 
 if (guesses == 0) {
-    alert("Times up, you failed.")
+    alert("Times up, you failed!!!!!")
 }
 
 
