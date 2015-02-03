@@ -2,60 +2,67 @@
  * Created by xpan on 1/14/15.
  */
 
-var ship_loc;
-var guess;
-var hits = 0;
-var guessCache = [];
-var guesses = 4;
-var create = false;
+var view = {
 
-while (!create) {
-    var random = Math.floor(Math.random() * 10);
-    if (!(random >= 0 && random <= 4)) {
-        continue;
-    } else {
-        ship_loc = random;
-        create = true;
+    displayMessage: function (msg) {
+        var res = document.getElementById("messageArea");
+        res.innerHTML = msg;
+    },
+
+    displayHit: function (location) {
+        var cell = document.getElementById(location);
+        cell.setAttribute("class", "hit");
+        this.displayMessage("HIT!")
+    },
+
+    displayMiss: function (location) {
+        var cell = document.getElementById(location);
+        cell.setAttribute("class", "miss");
+        this.displayMessage("MISS!")
     }
+
 }
 
 
-while (hits < 3 && guesses > 0) {
-    guess = prompt("Guess where's the ship?");
-    guesses--;
+var model = {
 
-    if (guess == null) {
-        break;
-    }
+    boardSize: 7,
+    shipNum: 3,
+    shipLen: 3,
+    sunk: 0,
+    ships: [
+        {locations: ["00", "01", "02"], hits: ["", "", ""]},
+        {locations: ["22", "32", "42"], hits: ["", "", ""]},
+        {locations: ["61", "62", "63"], hits: ["", "", ""]}
+    ],
 
-    if (guess < 0 || guess > 6) {
-        alert("The number must be between 0 - 6");
-        continue;
-    }
-
-    if (guessCache.indexOf(guess) >= 0) {
-        alert("The location you have guessed.");
-        continue;
-    }
-
-    if (guess == ship_loc || guess == ship_loc + 1 || guess == ship_loc + 2) {
-        guessCache[hits] = guess;
-
-        hits = hits + 1;
-        if (hits == 3) {
-            alert("Ship has gone. You win!");
-        } else {
-            alert("You hit the ship !!! Go on");
+    fire: function (locaiton) {
+        for (var i = 0; i < this.shipNum; i++) {
+            var ship = this.ships[i];
+            var loc = ship.locations;
+            var index = loc.indexOf(location);
+            if (index >= 0) {
+                ship.hits[index] = "hit";
+                if (this.isSunk(ship)) {
+                    this.sunk++;
+                }
+                return true;
+            }
         }
 
-    } else {
-        alert("Missed, move on! You have [" + guesses + "] times left");
-        continue;
-    }
-}
+        return false;
+    },
 
-if (guesses == 0) {
-    alert("Times up, you failed.")
+    isSunk: function (ship) {
+        for (var i = 0; i < this.shipLen; i++) {
+            if (ship.hits[i] != "hit") {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
 
 

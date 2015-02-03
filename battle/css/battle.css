@@ -2,15 +2,16 @@ body {
     background-color: black;
 }
 
-div#board {
+#board {
     position: relative;
     width: 1024px;
-    height: 700px;
+    height: 768px;
     margin: auto;
-    background: url("../images/board.jpg") no-repeat;
+    background-image: url("../images/board.jpg");
+    background-repeat: no-repeat;
 }
 
-div#messageArea {
+#messageArea {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -18,11 +19,17 @@ div#messageArea {
 }
 
 .hit {
-    background: url("../images/ship.png") no-repeat center center;
+    background-image: url("../images/ship.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
 }
 
 .miss {
-    background: url("../images/miss.png") no-repeat center center;
+    background-image: url("../images/miss.png");
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
 }
 
 table {
