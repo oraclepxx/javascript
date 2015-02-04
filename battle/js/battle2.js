@@ -1,4 +1,8 @@
 /**
+ * Created by xpan on 2/3/15.
+ */
+
+/**
  * Created by xpan on 1/14/15.
  */
 
@@ -30,14 +34,39 @@ var model = {
     shipNum: 3,
     shipLen: 3,
     sunk: 0,
-    ships: [
-        {locations: ["00", "01", "02"], hits: ["", "", ""]},
-        {locations: ["22", "32", "42"], hits: ["", "", ""]},
-        {locations: ["61", "62", "63"], hits: ["", "", ""]}
-    ],
+    ships: [],
 
-    setShips: function (total) {
+    resetShips: function (total) {
+        for (var i = 0; i < total; i++) {
+            var ship = this.createShip();
+            this.ships.push(ship);
+        }
+    },
 
+    createShipLoc: function () {
+        var randomX = Math.floor(Math.random() * 6);
+        var randomY = Math.floor(Math.random() * 6);
+        var loc = String(randomX) + String(randomY);
+        return loc;
+    },
+
+    createShip: function () {
+        var shipLoc = this.createShipLoc();
+        while (!canShip(loc, this.ships)) {
+            shipLoc = this.createShipLoc();
+        }
+        var ship = {location: shipLoc, hit: ""};
+        return ship;
+    },
+
+    canShip: function (loc, ships) {
+        for (var i = 0; i < ships.length; i++) {
+            var temp = ships[i].location;
+            if (loc == temp) {
+                return false;
+            }
+        }
+        return true;
     },
 
     fire: function (location) {
@@ -124,6 +153,7 @@ var controller = {
 
 
 function init() {
+    model.resetShips(model.shipNum);
     var fireButton = document.getElementById("fireButton");
     fireButton.onclick = handleFireButton;
 }
@@ -138,8 +168,5 @@ function handleFireButton() {
 
 
 window.onload = init();
-//view.displayHit(controller.parseGuess("A1"));
-//view.displayHit(controller.parseGuess("A2"));
-//view.displayHit(controller.parseGuess("A3"));
-//view.displayMessage(controller.parseGuess("C3"));
-//alert('B'.charCodeAt('A'));
+
+
