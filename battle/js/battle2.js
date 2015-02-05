@@ -23,7 +23,17 @@ var view = {
         var cell = document.getElementById(location);
         cell.setAttribute("class", "miss");
         this.displayMessage("MISS!")
+    },
+
+    displayReset: function () {
+        var tds = document.getElementsByTagName("td");
+        for (var i = 0; i < tds.length; i++) {
+            var cell = tds[i];
+            cell.removeAttribute("class");
+        }
+        this.displayMessage(null);
     }
+
 
 }
 
@@ -52,11 +62,10 @@ var model = {
 
     createShip: function () {
         var shipLoc = this.createShipLoc();
-        while (!canShip(loc, this.ships)) {
+        while (!this.canShip(shipLoc, this.ships)) {
             shipLoc = this.createShipLoc();
         }
-        var ship = {location: shipLoc, hit: ""};
-        return ship;
+        return {location: shipLoc, hit: ""};
     },
 
     canShip: function (loc, ships) {
@@ -72,13 +81,9 @@ var model = {
     fire: function (location) {
         for (var i = 0; i < this.shipNum; i++) {
             var ship = this.ships[i];
-            var loc = ship.locations;
-            var index = loc.indexOf(location);
-            if (index >= 0) {
-                ship.hits[index] = "hit";
-                if (this.isSunk(ship)) {
-                    this.sunk++;
-                }
+            var loc = ship.location;
+            if (loc == location) {
+                ship.hit = "hit";
                 return true;
             }
         }
@@ -86,15 +91,16 @@ var model = {
         return false;
     },
 
-    isSunk: function (ship) {
-        for (var i = 0; i < this.shipLen; i++) {
-            if (ship.hits[i] != "hit") {
-                return false;
-            }
-        }
+    initModel: function () {
+        this.boardSize = 7;
+        this.shipNum = 3;
+        this.shipLen = 3;
+        this.sunk = 0;
+        this.ships = [];
 
-        return true;
+        this.resetShips(this.shipNum);
     }
+
 
 }
 
@@ -153,9 +159,13 @@ var controller = {
 
 
 function init() {
-    model.resetShips(model.shipNum);
+    reset();
+
     var fireButton = document.getElementById("fireButton");
     fireButton.onclick = handleFireButton;
+
+    var resetButton = document.getElementById("resetButton");
+    resetButton.onclick = reset;
 }
 
 function handleFireButton() {
@@ -164,6 +174,11 @@ function handleFireButton() {
 
     controller.processGuess(guessInputValue);
 
+}
+
+function reset() {
+    model.initModel();
+    view.displayReset();
 }
 
 
