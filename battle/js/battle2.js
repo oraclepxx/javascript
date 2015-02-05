@@ -167,12 +167,15 @@ function init() {
 
     var resetButton = document.getElementById("resetButton");
     resetButton.onclick = reset;
+
+    var guessInput = document.getElementById("guessInput");
+    guessInput.onkeydown = handleKeyDown;
 }
 
 function handleFireButton() {
     var guessInput = document.getElementById("guessInput");
     var guessInputValue = guessInput.value;
-
+    guessInput.value = "";
     controller.processGuess(guessInputValue);
 
 }
@@ -182,6 +185,12 @@ function reset() {
     view.displayReset();
 }
 
+function handleKeyDown(e) {
+    var fire = document.getElementById("fireButton");
+    if (e.keyCode == 13) {
+        fire.click();
+    }
+}
 
 window.onload = init();
 
