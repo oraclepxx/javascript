@@ -108,6 +108,7 @@ var model = {
 var controller = {
 
     guesses: 0,
+    maxGuess: 7,
 
     processGuess: function (input) {
         var result = this.parseGuess(input);
@@ -124,7 +125,7 @@ var controller = {
                     view.displayHit(result);
                 }
             } else {
-                if (model.sunk == model.shipNum) {
+                if (this.guesses == this.maxGuess) {
                     view.displayMessage("You Lose !!!")
                 } else {
                     view.displayMiss(result);
