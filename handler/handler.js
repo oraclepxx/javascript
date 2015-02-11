@@ -3,8 +3,18 @@
  */
 
 
-window.onload = handlePageLoad;
+window.onload = init;
 
-function handlePageLoad() {
-    alert("Page Load")
+function init() {
+    var imgArray = document.getElementsByTagName("img");
+    for(var i = 0; i < imgArray.length; i++) {
+        var loc = "images/" + (i + 1) + ".png";
+        imgArray[i].src = loc;
+        imgArray[i].onclick = handleImage;
+    }
+
+}
+
+function handleImage() {
+
 }
