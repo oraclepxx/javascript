@@ -17,8 +17,10 @@ function init() {
     //    }
     //    alert(names + " didn't pay");
     //}
-
-    order(passengers);
+    //
+    //order(passengers);
+    processPassenagers(passengers, printPassenager);
+    
 }
 
 function processPassengers(passengers, check) {
@@ -104,5 +106,21 @@ function orderFood(passenagers) {
     for (var i = 0; i < passenagers.length; i++) {
         var orderFood = createFoodOrder(passenagers[i]);
         orderFood();
+    }
+}
+
+function printPassenager(passenager) {
+    var name = passenager.name;
+    if (passenager.paid) {
+        name = name + " paid";
+    } else {
+        name = name + " unpaid"
+    }
+    alert(name);
+}
+
+function processPassenagers(passenagers, printPassenager) {
+    for (var i = 0; i < passenagers.length; i++) {
+        printPassenager(passenagers[i]);
     }
 }

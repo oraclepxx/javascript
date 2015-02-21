@@ -6,19 +6,20 @@
 window.onload = init;
 
 function init() {
-    var imgArray = document.getElementsByTagName("img");
-    for (var i = 0; i < imgArray.length; i++) {
-        var loc = "images/" + (i + 1) + ".png";
-        imgArray[i].src = loc;
-        imgArray[i].onclick = handleImage;
-        imgArray[i].onmousemove = handleMouseMoved;
-        imgArray[i].onmouseover = handleMouseHover;
-    }
+    //var imgArray = document.getElementsByTagName("img");
+    //for (var i = 0; i < imgArray.length; i++) {
+    //    var loc = "images/" + (i + 1) + ".png";
+    //    imgArray[i].src = loc;
+    //    imgArray[i].onclick = handleImage;
+    //    imgArray[i].onmousemove = handleMouseMoved;
+    //    imgArray[i].onmouseover = handleMouseHover;
+    //}
     //setTimeout(timer, 3000);
     //setInterval(timer, 3000);
 
     //var testImg = document.getElementById("testImg");
     //testImg.onmousemove = handleMouseMoved;
+    alert(addN(10))
 }
 
 function timer() {
@@ -68,4 +69,11 @@ function handleMouseMoved(eventObject) {
     message = message + "<br/>" + "Screen:" + screenX + "/" + screenY;
     message = message + "<br/>" + "Page:" + pageX + "/" + pageY;
     msg.innerHTML = message;
+}
+
+function addN(n) {
+    var add = function (a) {
+        return a + n;
+    }
+    return add;
 }
