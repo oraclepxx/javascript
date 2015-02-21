@@ -6,7 +6,6 @@ window.onload = init;
 
 function init() {
 
-    alert("abc" == "zyx");
     //var allPaid = processPassengers(passengers, checkNoFly);
     //if (allPaid) {
     //    alert("All passengers have paid.")
@@ -18,6 +17,8 @@ function init() {
     //    }
     //    alert(names + " didn't pay");
     //}
+
+    order(passengers);
 }
 
 function processPassengers(passengers, check) {
@@ -30,10 +31,10 @@ function processPassengers(passengers, check) {
     return true;
 }
 
-var passengers = [{name: "Joe Doloop", paid: true},
-    {name: "Sue Green", paid: true},
-    {name: "Gino Han", paid: false},
-    {name: "Zion Kan", paid: true}];
+var passengers = [{name: "Joe Doloop", paid: true, ticket: "firstclass"},
+    {name: "Sue Green", paid: true, ticket: "coach"},
+    {name: "Gino Han", paid: false, ticket: "business"},
+    {name: "Zion Kan", paid: true, ticket: "coach"}];
 
 function checkNoFly(passenger, inputName) {
     return passenger.name == inputName;
@@ -51,4 +52,57 @@ function getUnpaidPassengers(passengers) {
         }
     }
     return list;
+}
+
+function createDrinkOrder(passenager) {
+    var orderFun;
+    if (passenager.ticket == "firstclass") {
+        orderFun = function () {
+            alert("Wine");
+        };
+    } else if (passenager.ticket == "business") {
+        orderFun = function () {
+            alert("Beer");
+        };
+    } else {
+        orderFun = function () {
+            alert("Cola or water");
+        };
+    }
+
+    return orderFun;
+}
+
+function createFoodOrder(passenager) {
+    var orderFun;
+    if (passenager.ticket == "firstclass") {
+        orderFun = function () {
+            alert("Chicken or pasta");
+        };
+    } else if (passenager.ticket == "business") {
+        orderFun = function () {
+            alert("Snack box");
+        };
+    } else {
+        orderFun = function () {
+            alert("Peanut");
+        };
+    }
+
+    return orderFun;
+}
+
+function orderDrink(passenagers) {
+    for (var i = 0; i < passenagers.length; i++) {
+        var orderDrink = createDrinkOrder(passenagers[i]);
+        orderDrink();
+    }
+
+}
+
+function orderFood(passenagers) {
+    for (var i = 0; i < passenagers.length; i++) {
+        var orderFood = createFoodOrder(passenagers[i]);
+        orderFood();
+    }
 }
